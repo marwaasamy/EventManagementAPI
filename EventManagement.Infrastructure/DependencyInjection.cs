@@ -3,6 +3,7 @@ using EventManagement.Application.Mappings;
 using EventManagement.Application.Services;
 using EventManagement.Domain.Entities;
 using EventManagement.Infrastructure.Data;
+using EventManagement.Infrastructure.Helpers;
 using EventManagement.Infrastructure.Repos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,7 @@ namespace EventManagement.Infrastructure
 
             // Register Category service
             services.AddScoped<ICategoryService, CategoryService>();
+            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
             services.AddAutoMapper(cfg => { }, typeof(DomainProfile).Assembly);
 

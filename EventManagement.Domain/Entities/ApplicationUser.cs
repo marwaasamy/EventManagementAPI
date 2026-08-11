@@ -16,7 +16,7 @@ namespace EventManagement.Domain.Entities
 
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";
-        public ICollection<Event> Events { get; set; } = new List<Event>();
-        public ICollection<EventRegister> EventRegisters { get; set; } = new List<EventRegister>();
+        public ICollection<Event>? Events { get; set; } = new List<Event>();
+        public ICollection<EventRegister>? EventRegisters { get; set; } = new List<EventRegister>();
     }
 }
