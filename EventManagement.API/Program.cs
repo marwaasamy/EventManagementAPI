@@ -1,4 +1,5 @@
 
+using EventManagement.Infrastructure;
 using EventManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,8 +14,7 @@ namespace EventManagement.API
             // Add services to the container.
 
             builder.Services.AddControllers();
-            builder.Services.AddDbContext<AppDbContext>(options =>
-           options.UseSqlServer(builder.Configuration.GetConnectionString("cs")));
+            builder.Services.AddInfrastructure(builder.Configuration);
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 

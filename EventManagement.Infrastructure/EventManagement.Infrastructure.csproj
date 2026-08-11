@@ -6,22 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Configurations\CategoryConfiguration.cs" Link="Data\Configurations\CategoryConfiguration.cs" />
-    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Configurations\EventConfiguration.cs" Link="Data\Configurations\EventConfiguration.cs" />
-    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Configurations\EventRegisterConfiguration.cs" Link="Data\Configurations\EventRegisterConfiguration.cs" />
-    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Configurations\PaymentConfiguration.cs" Link="Data\Configurations\PaymentConfiguration.cs" />
-    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Configurations\RoleConfiguration.cs" Link="Data\Configurations\RoleConfiguration.cs" />
-    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Configurations\UserConfiguration.cs" Link="Data\Configurations\UserConfiguration.cs" />
-    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Configurations\VenueConfiguration.cs" Link="Data\Configurations\VenueConfiguration.cs" />
-  </ItemGroup>
+ 
 
   <ItemGroup>
     <ProjectReference Include="..\EventManagement.Application\EventManagement.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Configurations\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,5 @@
-﻿using EventManagement.DAL.Configurations;
-using EventManagement.DAL.Entities;
+﻿using EventManagement.Infrastructure.Data.Configurations;
+using EventManagement.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
