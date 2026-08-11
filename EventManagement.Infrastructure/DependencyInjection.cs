@@ -1,4 +1,5 @@
 ﻿using EventManagement.Application.Interfaces;
+using EventManagement.Application.Mappings;
 using EventManagement.Application.Services;
 using EventManagement.Domain.Entities;
 using EventManagement.Infrastructure.Data;
@@ -17,7 +18,7 @@ namespace EventManagement.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("cs")));
 
             // Register generic repository
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -27,6 +28,8 @@ namespace EventManagement.Infrastructure
 
             // Register Category service
             services.AddScoped<ICategoryService, CategoryService>();
+
+            services.AddAutoMapper(cfg => { }, typeof(DomainProfile).Assembly);
 
             return services;
 

@@ -1,4 +1,7 @@
 using EventManagement.Application.Interfaces;
+using EventManagement.Domain.Entities;
+using EventManagement.Infrastructure.Data;
+using EventManagement.Infrastructure.Repos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,16 +10,21 @@ namespace EventManagement.Infrastructure
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly Data.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public UnitOfWork(Data.AppDbContext context)
+        public UnitOfWork(AppDbContext context)
         {
             _context = context;
+            Categories = new GenericRepository<Category>(_context);
+
         }
 
-        public async Task SaveChangesAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
+        public IGenericRepository<Category> Categories { get; }
+
+        public async Task<int> CompleteAsync()
+          => await _context.SaveChangesAsync();
+
+        public void Dispose()
+            => _context.Dispose();
     }
 }

@@ -1,3 +1,7 @@
+using AutoMapper;
+using EventManagement.Application.Common;
+using EventManagement.Application.DTOs.Category.Command;
+using EventManagement.Application.DTOs.Category.Query;
 using EventManagement.Application.Interfaces;
 using EventManagement.Domain.Entities;
 using System;
@@ -10,51 +14,71 @@ namespace EventManagement.Application.Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly IGenericRepository<Category> _repository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public CategoryService(IGenericRepository<Category> repository, IUnitOfWork unitOfWork)
+        public CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _repository = repository;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public async Task<Category?> GetCategoryAsync(
-            Expression<Func<Category, bool>>? criteria = null,
-            Expression<Func<Category, object>>[]? includes = null,
-            string[]? includeStrings = null)
+        public async Task<IEnumerable<CategoryDto>> GetAllAsync(int pageNumber = 1, int pageSize = 0)
         {
-            return await _repository.GetAsync(criteria, includes, includeStrings);
+            var categories = await _unitOfWork.Categories.GetAllAsync(
+                includeStrings: new[] { "Events" },
+                pageNumber: pageNumber,
+                pageSize: pageSize);
+
+            return _mapper.Map<IEnumerable<CategoryDto>>(categories);
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategoriesAsync(
-            Expression<Func<Category, bool>>? criteria = null,
-            Expression<Func<Category, object>>[]? includes = null,
-            int pageNumber = 1,
-            int pageSize = 0,
-            string[]? includeStrings = null)
+        public async Task<CategoryDto?> GetByIdAsync(int id)
         {
-            return await _repository.GetAllAsync(criteria, includes, pageNumber, pageSize, includeStrings);
+            var category = await _unitOfWork.Categories.GetAsync(
+                criteria: c => c.Id == id,
+                includeStrings: new[] { "Events" });
+
+            return category is null ? null : _mapper.Map<CategoryDto>(category);
         }
 
-        public async Task AddCategoryAsync(Category category)
+        public async Task<ServiceResult<CategoryDto>> CreateAsync(CreateCategoryDto dto, string createdBy)
         {
-            await _repository.AddAsync(category);
+            var existing = await _unitOfWork.Categories.GetAsync(criteria: c => c.Name == dto.Name);
+            if (existing is not null)
+                return ServiceResult<CategoryDto>.Fail("A category with this name already exists.");
+
+            var category = new Category(dto.Name, dto.Description, createdBy);
+            await _unitOfWork.Categories.AddAsync(category);
+            await _unitOfWork.CompleteAsync();
+
+            return ServiceResult<CategoryDto>.Ok(_mapper.Map<CategoryDto>(category));
         }
 
-        public async Task UpdateCategoryAsync(Category category)
+        public async Task<ServiceResult<CategoryDto>> UpdateAsync(int id, UpdateCategoryDto dto, string updatedBy)
         {
-            _repository.Update(category);
+            var category = await _unitOfWork.Categories.GetAsync(criteria: c => c.Id == id);
+            if (category is null)
+                return ServiceResult<CategoryDto>.Fail("Category not found.");
+
+            category.Update(dto.Name, dto.Description, updatedBy);
+            _unitOfWork.Categories.Update(category);
+            await _unitOfWork.CompleteAsync();
+
+            return ServiceResult<CategoryDto>.Ok(_mapper.Map<CategoryDto>(category));
         }
 
-        public async Task RemoveCategoryAsync(Category category)
+        public async Task<ServiceResult<bool>> DeleteAsync(int id, string deletedBy)
         {
-            _repository.Remove(category);
-        }
+            var category = await _unitOfWork.Categories.GetAsync(criteria: c => c.Id == id);
+            if (category is null)
+                return ServiceResult<bool>.Fail("Category not found.");
 
-        public async Task SaveChangesAsync()
-        {
-            await _unitOfWork.SaveChangesAsync();
+            category.Delete(deletedBy); // soft delete via domain method
+            _unitOfWork.Categories.Update(category);
+            await _unitOfWork.CompleteAsync();
+
+            return ServiceResult<bool>.Ok(true);
         }
     }
 }

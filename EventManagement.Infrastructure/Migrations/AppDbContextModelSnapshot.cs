@@ -136,7 +136,7 @@ namespace EventManagement.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("EventManagement.DAL.Entities.Event", b =>
@@ -217,7 +217,7 @@ namespace EventManagement.Infrastructure.Migrations
 
                     b.HasIndex("VenueId");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("EventManagement.DAL.Entities.EventRegister", b =>
@@ -269,7 +269,7 @@ namespace EventManagement.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("EventRegisters");
+                    b.ToTable("EventRegisters", (string)null);
                 });
 
             modelBuilder.Entity("EventManagement.DAL.Entities.Payment", b =>
@@ -318,7 +318,7 @@ namespace EventManagement.Infrastructure.Migrations
 
                     b.HasIndex("EventRegisterId");
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payment", (string)null);
                 });
 
             modelBuilder.Entity("EventManagement.DAL.Entities.Venue", b =>
@@ -375,7 +375,7 @@ namespace EventManagement.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Venues");
+                    b.ToTable("Venues", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

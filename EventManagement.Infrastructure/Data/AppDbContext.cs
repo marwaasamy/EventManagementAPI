@@ -17,6 +17,8 @@ namespace EventManagement.Infrastructure.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Venue> Venues { get; set; }
         public DbSet<EventRegister> EventRegisters { get; set; }
+
+        public DbSet<Payment> Payment { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -26,6 +28,8 @@ namespace EventManagement.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new VenueConfiguration());
             modelBuilder.ApplyConfiguration(new EventRegisterConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new PaymentConfiguration());
         }
     }
 }

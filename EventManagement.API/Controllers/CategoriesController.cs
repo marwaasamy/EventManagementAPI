@@ -1,3 +1,5 @@
+using EventManagement.Application.DTOs.Category.Command;
+using EventManagement.Application.DTOs.Category.Query;
 using EventManagement.Application.Interfaces;
 using EventManagement.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -18,91 +20,44 @@ namespace EventManagement.API.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategory(int id)
-        {
-            var category = await _categoryService.GetCategoryAsync(c => c.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return Ok(category);
-        }
-
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 0)
+        public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAll(
+            [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 0) =>
+            Ok(await _categoryService.GetAllAsync(pageNumber, pageSize));
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<CategoryDto>> GetById(int id)
         {
-            var categories = await _categoryService.GetAllCategoriesAsync(pageNumber: pageNumber, pageSize: pageSize);
-            return Ok(categories);
+            var category = await _categoryService.GetByIdAsync(id);
+            return category is null ? NotFound() : Ok(category);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Category>> CreateCategory([FromBody] CreateCategoryRequest request)
+        public async Task<ActionResult<CategoryDto>> Create(CreateCategoryDto dto)
         {
-            if (string.IsNullOrWhiteSpace(request.Name))
-            {
-                return BadRequest("Category name is required.");
-            }
+            var createdBy = User.Identity?.Name ?? "system"; // swap once JWT auth is in
+            var result = await _categoryService.CreateAsync(dto, createdBy);
+            if (!result.Success)
+                return BadRequest(new { message = result.Message });
 
-            var category = new Category(request.Name, request.Description ?? string.Empty, GetCurrentUser());
-            await _categoryService.AddCategoryAsync(category);
-            await _categoryService.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, category);
+            return CreatedAtAction(nameof(GetById), new { id = result.Data!.Id }, result.Data);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, [FromBody] UpdateCategoryRequest request)
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<CategoryDto>> Update(int id, UpdateCategoryDto dto)
         {
-            var category = await _categoryService.GetCategoryAsync(c => c.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Name))
-            {
-                return BadRequest("Category name is required.");
-            }
-
-            category.Update(request.Name, request.Description ?? string.Empty, GetCurrentUser());
-            await _categoryService.UpdateCategoryAsync(category);
-            await _categoryService.SaveChangesAsync();
-
-            return Ok(category);
+            var updatedBy = User.Identity?.Name ?? "system";
+            var result = await _categoryService.UpdateAsync(id, dto, updatedBy);
+            return result.Success ? Ok(result.Data) : BadRequest(new { message = result.Message });
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var category = await _categoryService.GetCategoryAsync(c => c.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            category.Delete(GetCurrentUser());
-            await _categoryService.RemoveCategoryAsync(category);
-            await _categoryService.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private string GetCurrentUser()
-        {
-            return User?.Identity?.Name ?? "System";
+            var deletedBy = User.Identity?.Name ?? "system";
+            var result = await _categoryService.DeleteAsync(id, deletedBy);
+            return result.Success ? NoContent() : BadRequest(new { message = result.Message });
         }
     }
 
-    public class CreateCategoryRequest
-    {
-        public string Name { get; set; } = string.Empty;
-        public string? Description { get; set; }
-    }
-
-    public class UpdateCategoryRequest
-    {
-        public string Name { get; set; } = string.Empty;
-        public string? Description { get; set; }
-    }
 }

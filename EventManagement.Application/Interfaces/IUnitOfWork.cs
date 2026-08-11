@@ -1,11 +1,13 @@
+using EventManagement.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EventManagement.Application.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
-        Task SaveChangesAsync();
+        IGenericRepository<Category> Categories { get; }
+        Task <int> CompleteAsync();
     }
 }
