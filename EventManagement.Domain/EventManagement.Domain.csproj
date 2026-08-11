@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Entities\ApplicationUser.cs" Link="Entities\ApplicationUser.cs" />
+    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Entities\Category.cs" Link="Entities\Category.cs" />
+    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Entities\Event.cs" Link="Entities\Event.cs" />
+    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Entities\EventRegister.cs" Link="Entities\EventRegister.cs" />
+    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Entities\Payment.cs" Link="Entities\Payment.cs" />
+    <Compile Include="..\..\..\EventManagement.API\EventManagement.DAL\Entities\Venue.cs" Link="Entities\Venue.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Enums\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.10" />
+  </ItemGroup>
+
+</Project>
