@@ -72,12 +72,23 @@ namespace EventManagement.Infrastructure.Repos
 
         public async Task AddAsync(T entity) => await DbSet.AddAsync(entity);
 
-        public void Update(T entity) => DbSet.Update(entity);
-
-        public void Remove(T entity)
+        public Task<T> UpdateAsync(T entity)
         {
-            entity.Delete();
-            DbSet.Update(entity);
+            Context.Set<T>().Update(entity);
+            return Task.FromResult(entity);
+        }
+
+        public Task SoftDeleteAsync(T entity, string deletedUser = "")
+        {
+            entity.Delete(deletedUser);
+            Context.Set<T>().Update(entity);
+            return Task.CompletedTask;
+        }
+
+        public Task HardDeleteAsync(T entity)
+        {
+            Context.Set<T>().Remove(entity);
+            return Task.CompletedTask;
         }
     }
 }

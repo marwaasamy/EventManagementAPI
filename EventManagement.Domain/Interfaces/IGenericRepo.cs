@@ -21,7 +21,8 @@ namespace EventManagement.Application.Interfaces
             string[]? includeStrings = null);
 
         Task AddAsync(T entity);
-        void Update(T entity);
-        void Remove(T entity);
+        Task<T> UpdateAsync(T entity);
+        Task SoftDeleteAsync(T entity, string deletedUser = "");
+        Task HardDeleteAsync(T entity);
     }
 }

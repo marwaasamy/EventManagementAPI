@@ -62,7 +62,7 @@ namespace EventManagement.Application.Services
                 return ServiceResult<CategoryDto>.Fail("Category not found.");
 
             category.Update(dto.Name, dto.Description, updatedBy);
-            _unitOfWork.Categories.Update(category);
+            await _unitOfWork.Categories.UpdateAsync(category);
             await _unitOfWork.CompleteAsync();
 
             return ServiceResult<CategoryDto>.Ok(_mapper.Map<CategoryDto>(category));
@@ -74,8 +74,7 @@ namespace EventManagement.Application.Services
             if (category is null)
                 return ServiceResult<bool>.Fail("Category not found.");
 
-            category.Delete(deletedBy); // soft delete via domain method
-            _unitOfWork.Categories.Update(category);
+            await _unitOfWork.Categories.SoftDeleteAsync(category, deletedBy); // soft delete via domain method
             await _unitOfWork.CompleteAsync();
 
             return ServiceResult<bool>.Ok(true);
