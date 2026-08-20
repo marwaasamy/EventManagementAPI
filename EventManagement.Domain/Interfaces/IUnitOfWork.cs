@@ -12,6 +12,7 @@ namespace EventManagement.Domain.Interfaces
         IGenericRepository<Venue> Venues { get; }
 
         IGenericRepository<Event> Events { get; }
+        IGenericRepository<EventRegister> EventRegisters { get; }
         Task <int> CompleteAsync();
     }
 }

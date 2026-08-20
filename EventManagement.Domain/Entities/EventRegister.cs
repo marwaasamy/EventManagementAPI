@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventManagement.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -8,7 +9,7 @@ namespace EventManagement.Domain.Entities
     public class EventRegister : BaseEntity
     {
         public DateTime RegisterationDate { get; private set; }
-        public string Status { get; private set; }
+        public RegistrationStatus Status { get; private set; }
         public int EventId { get; private set; }
         [ForeignKey("EventId")]
         public Event Event { get; private set; }
@@ -18,7 +19,7 @@ namespace EventManagement.Domain.Entities
 
         public ICollection<Payment> Payments { get; private set; } = new List<Payment>();
 
-        public EventRegister(DateTime registerationDate, string status, int eventId, string userId, string creatorUser = "") : base(creatorUser)
+        public EventRegister(DateTime registerationDate, RegistrationStatus status, int eventId, string userId, string creatorUser = "") : base(creatorUser)
         {
             RegisterationDate = registerationDate;
             Status = status;
@@ -26,7 +27,7 @@ namespace EventManagement.Domain.Entities
             UserId = userId;
         }
 
-        public void Update(DateTime registerationDate, string status, int eventId, string userId, string modifierUser = "")
+        public void Update(DateTime registerationDate, RegistrationStatus status, int eventId, string userId, string modifierUser = "")
         {
             RegisterationDate = registerationDate;
             Status = status;

@@ -32,7 +32,7 @@ namespace EventManagement.API.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [RequestSizeLimit(5 * 1024 * 1024)]
         public async Task<IActionResult> Create([FromForm] CreateEventDto dto, IFormFile image)
         {
@@ -50,7 +50,7 @@ namespace EventManagement.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [RequestSizeLimit(5 * 1024 * 1024)]
         public async Task<IActionResult> Update(int id, [FromForm] UpdateEventDto dto, IFormFile? image)
         {
@@ -68,7 +68,7 @@ namespace EventManagement.API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var deletedUser = User.Identity?.Name ?? "system";

@@ -40,6 +40,7 @@ namespace EventManagement.Infrastructure
             services.AddScoped<IVenueService, VenueService>();
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IEventRegisterService, EventRegisterService>();
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
             services.Configure<JWT>(configuration.GetSection("JWT"));
 

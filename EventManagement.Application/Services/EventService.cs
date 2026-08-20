@@ -58,7 +58,7 @@ using System.Text;
                 var ev = new Event(
                     dto.Title, dto.Capacity, dto.Description, dto.StartDate, dto.EndDate
                    , imageUrl, dto.Price, dto.IsPaid,
-                    dto.CategoryId, dto.VenueId, creatorUser);
+                    dto.CategoryId, dto.VenueId, dto.Status, creatorUser);
 
                 try
                 {
@@ -93,10 +93,8 @@ using System.Text;
                     imageUrl = newUrl;
                 }
 
-                ev.Update(
-                    dto.Title, dto.Capacity, dto.Description, dto.StartDate, dto.EndDate,
-                     imageUrl, dto.Price, dto.IsPaid,
-                    dto.CategoryId, dto.VenueId, modifierUser);
+                ev.Update(dto.Title, dto.Capacity, dto.Description, dto.StartDate, dto.EndDate,
+                    imageUrl, dto.Price, dto.IsPaid, dto.CategoryId, dto.VenueId, dto.Status, modifierUser);
 
                 await _unitOfWork.Events.UpdateAsync(ev);
                 await _unitOfWork.CompleteAsync();

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EventManagement.Application.DTOs.Category.Query;
 using EventManagement.Application.DTOs.Event.Query;
+using EventManagement.Application.DTOs.EventRegister.Query;
 using EventManagement.Application.DTOs.Venue.Command;
 using EventManagement.Application.DTOs.Venue.Query;
 using EventManagement.Domain.Entities;
@@ -26,6 +27,10 @@ namespace EventManagement.Application.Mappings
 
             CreateMap<Event, EventListDto>()
                 .ForMember(d => d.VenueName, o => o.MapFrom(s => s.Venue != null ? s.Venue.Name : null));
+
+            CreateMap<EventRegister, EventRegisterResponseDto>()
+              .ForMember(dest => dest.EventTitle, opt => opt.MapFrom(src => src.Event != null ? src.Event.Title : string.Empty))
+              .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? src.User.FullName : string.Empty));
         }
     }
 }
