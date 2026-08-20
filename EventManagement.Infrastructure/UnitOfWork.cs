@@ -18,12 +18,14 @@ namespace EventManagement.Infrastructure
             _context = context;
             Categories = new GenericRepository<Category>(_context);
             Venues = new GenericRepository<Venue>(_context);
+            Events = new GenericRepository<Event>(_context);
 
         }
 
         public IGenericRepository<Category> Categories { get; }
         public IGenericRepository<Venue> Venues { get; }
 
+        public IGenericRepository<Event> Events { get; }
         public async Task<int> CompleteAsync()
           => await _context.SaveChangesAsync();
 

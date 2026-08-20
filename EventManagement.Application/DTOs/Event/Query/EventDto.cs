@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace EventManagement.Application.DTOs.Event.Query
+{
+    public class EventDto
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public int Capacity { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        //public string Status { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
+        public decimal? Price { get; set; }
+        public bool IsPaid { get; set; }
+        public int CategoryId { get; set; }
+        public string? CategoryName { get; set; }
+        public int VenueId { get; set; }
+        public string? VenueName { get; set; }
+    }
+}

@@ -12,7 +12,7 @@ namespace EventManagement.Domain.Entities
         public string Description { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
-        public string Status { get; private set; }
+        //public string Status { get; private set; }
         public string ImageUrl { get; private set; }
         public decimal? Price { get; private set; }
         public bool IsPaid { get; private set; } // is the event paid or free
@@ -26,7 +26,7 @@ namespace EventManagement.Domain.Entities
         public Venue Venue { get; private set; }
         public ICollection<EventRegister> EventRegisters { get; private set; } = new List<EventRegister>();
 
-        public Event(string title, int capacity, string description, DateTime startDate, DateTime endDate, string status, string imageUrl,
+        public Event(string title, int capacity, string description, DateTime startDate, DateTime endDate, string imageUrl,
             decimal? price, bool isPaid, int categoryId, int venueId, string creatorUser = "") : base(creatorUser)
         {
             Title = title;
@@ -34,7 +34,6 @@ namespace EventManagement.Domain.Entities
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
-            Status = status;
             ImageUrl = imageUrl;
             Price = price;
             IsPaid = isPaid;
@@ -42,7 +41,7 @@ namespace EventManagement.Domain.Entities
             VenueId = venueId;
         }
 
-        public void Update(string title, int capacity, string description, DateTime startDate, DateTime endDate, string status, string imageUrl,
+        public void Update(string title, int capacity, string description, DateTime startDate, DateTime endDate, string imageUrl,
             decimal? price, bool isPaid, int categoryId, int venueId, string modifierUser = "")
         {
             Title = title;
@@ -50,7 +49,6 @@ namespace EventManagement.Domain.Entities
             Description = description;
             StartDate = startDate;
             EndDate = endDate;
-            Status = status;
             ImageUrl = imageUrl;
             Price = price;
             IsPaid = isPaid;
