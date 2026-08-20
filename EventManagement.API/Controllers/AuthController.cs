@@ -26,7 +26,7 @@ namespace EventManagement.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _authService.RegisterAsync(registerDTO, new[] { Roles.User });
+            var result = await _authService.RegisterAsync(registerDTO, new[] { Roles.Admin });
 
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }

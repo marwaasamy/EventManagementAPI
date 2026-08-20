@@ -15,21 +15,19 @@ namespace EventManagement.Domain.Entities
         public string Status { get; private set; }
         public string ImageUrl { get; private set; }
         public decimal? Price { get; private set; }
-        public bool IsPaid { get; private set; }
+        public bool IsPaid { get; private set; } // is the event paid or free
         public int CategoryId { get; private set; }
 
         [ForeignKey("CategoryId")]
         public Category Category { get; private set; }
-        public string OrganizerId { get; private set; }
-        [ForeignKey("OrganizerId")]
-        public ApplicationUser Organizer { get; private set; }
+       
         public int VenueId { get; private set; }
         [ForeignKey("VenueId")]
         public Venue Venue { get; private set; }
         public ICollection<EventRegister> EventRegisters { get; private set; } = new List<EventRegister>();
 
         public Event(string title, int capacity, string description, DateTime startDate, DateTime endDate, string status, string imageUrl,
-            decimal? price, bool isPaid, int categoryId, string organizerId, int venueId, string creatorUser = "") : base(creatorUser)
+            decimal? price, bool isPaid, int categoryId, int venueId, string creatorUser = "") : base(creatorUser)
         {
             Title = title;
             Capacity = capacity;
@@ -41,12 +39,11 @@ namespace EventManagement.Domain.Entities
             Price = price;
             IsPaid = isPaid;
             CategoryId = categoryId;
-            OrganizerId = organizerId;
             VenueId = venueId;
         }
 
         public void Update(string title, int capacity, string description, DateTime startDate, DateTime endDate, string status, string imageUrl,
-            decimal? price, bool isPaid, int categoryId, string organizerId, int venueId, string modifierUser = "")
+            decimal? price, bool isPaid, int categoryId, int venueId, string modifierUser = "")
         {
             Title = title;
             Capacity = capacity;
@@ -58,7 +55,6 @@ namespace EventManagement.Domain.Entities
             Price = price;
             IsPaid = isPaid;
             CategoryId = categoryId;
-            OrganizerId = organizerId;
             VenueId = venueId;
             base.Update(modifierUser);
         }

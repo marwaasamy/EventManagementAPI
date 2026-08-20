@@ -1,5 +1,6 @@
 using EventManagement.Application.Interfaces;
 using EventManagement.Domain.Entities;
+using EventManagement.Domain.Interfaces;
 using EventManagement.Infrastructure.Data;
 using EventManagement.Infrastructure.Repos;
 using System;
@@ -16,10 +17,12 @@ namespace EventManagement.Infrastructure
         {
             _context = context;
             Categories = new GenericRepository<Category>(_context);
+            Venues = new GenericRepository<Venue>(_context);
 
         }
 
         public IGenericRepository<Category> Categories { get; }
+        public IGenericRepository<Venue> Venues { get; }
 
         public async Task<int> CompleteAsync()
           => await _context.SaveChangesAsync();

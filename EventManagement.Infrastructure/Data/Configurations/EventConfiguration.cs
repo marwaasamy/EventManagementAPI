@@ -24,10 +24,7 @@ namespace EventManagement.Infrastructure.Data.Configurations
                 .HasForeignKey(e => e.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(e => e.Organizer)
-                .WithMany(u => u.Events)
-                .HasForeignKey(e => e.OrganizerId)
-                .OnDelete(DeleteBehavior.Restrict);
+           
 
             builder.HasOne(e => e.Venue)
                 .WithMany(v => v.Events)

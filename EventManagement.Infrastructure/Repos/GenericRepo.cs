@@ -1,5 +1,6 @@
 ﻿using EventManagement.Application.Interfaces;
 using EventManagement.Domain.Entities;
+using EventManagement.Domain.Interfaces;
 using EventManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;

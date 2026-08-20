@@ -2,13 +2,14 @@ using AutoMapper;
 using EventManagement.Application.Common;
 using EventManagement.Application.DTOs.Category.Command;
 using EventManagement.Application.DTOs.Category.Query;
-using EventManagement.Application.Interfaces;
+using EventManagement.Domain.Interfaces;
 using EventManagement.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using EventManagement.Application.Interfaces;
 
 namespace EventManagement.Application.Services
 {

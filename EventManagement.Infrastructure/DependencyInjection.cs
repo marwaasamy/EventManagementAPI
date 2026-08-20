@@ -2,6 +2,7 @@
 using EventManagement.Application.Mappings;
 using EventManagement.Application.Services;
 using EventManagement.Domain.Entities;
+using EventManagement.Domain.Interfaces;
 using EventManagement.Infrastructure.Data;
 using EventManagement.Infrastructure.Helpers;
 using EventManagement.Infrastructure.Repos;
@@ -36,6 +37,7 @@ namespace EventManagement.Infrastructure
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IVenueService, VenueService>();
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
             services.Configure<JWT>(configuration.GetSection("JWT"));
 

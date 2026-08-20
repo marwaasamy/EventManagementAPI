@@ -10,11 +10,10 @@ namespace EventManagement.Domain.Constants
         public const string Admin = "Admin";
         public const string User = "User";
 
-        public const string Organizer = "Organizer";
 
         public static readonly string[] All =
        {
-            Admin, User, Organizer
+            Admin, User
         };
 
 

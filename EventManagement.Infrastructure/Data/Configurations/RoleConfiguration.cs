@@ -26,14 +26,6 @@ namespace EventManagement.Infrastructure.Data.Configurations
                 NormalizedName = "USER",
                 ConcurrencyStamp = "a41176ab-3877-45f3-a75b-f1619b82f073",
 
-            },
-            new IdentityRole
-            {
-                Id = "c34d1d0b-c717-4b32-8157-da17a0b42a73",
-                Name = "Organizer",
-                NormalizedName = "ORGANIZER",
-                ConcurrencyStamp = "288c5908-d12d-4816-9e79-410df6a1c09f",
-
             }
         );
         }
